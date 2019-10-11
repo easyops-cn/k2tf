@@ -348,7 +348,7 @@ func (w *ObjectWalker) Primitive(v reflect.Value) error {
 	if !w.ignoreSliceElems && v.CanAddr() && v.CanInterface() {
 		w.debug(fmt.Sprintf("Primitive: %s = %v (%T)", w.field().Name, v.Interface(), v.Interface()))
 
-		if !IsZero(v) {
+		if !IsZero(v) || w.isRequiredField() {
 			w.currentBlock.hasValue = true
 			w.currentBlock.SetAttributeValue(
 				tfkschema.ToTerraformAttributeName(w.field(), w.currentBlock.FullSchemaName()),
@@ -357,6 +357,15 @@ func (w *ObjectWalker) Primitive(v reflect.Value) error {
 		}
 	}
 	return nil
+}
+
+// emit field that omitempty
+func (w *ObjectWalker) isRequiredField() bool {
+	if len(w.fields) == 0 {
+		return false
+	}
+	fieldName := w.fields[len(w.fields)-1].Name
+	return fieldName == "Replicas"
 }
 
 // Map is called everytime reflectwalk enters a Map
