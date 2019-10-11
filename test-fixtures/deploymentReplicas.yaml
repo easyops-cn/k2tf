@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backend-api
+  name: backend-api
+  namespace: default
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: backend-api
+  template:
+    metadata:
+      labels:
+        app: backend-api
+    spec:
+      containers:
+        - name: api
+          ports:
+            - containerPort: 443
+              protocol: TCP
+          image: gcr.io/project/backend-api:0.3.15

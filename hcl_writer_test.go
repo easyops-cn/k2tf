@@ -72,6 +72,11 @@ func TestWriteObject(t *testing.T) {
 			0,
 		},
 		{
+			"deploymentReplicas",
+			"kubernetes_deployment",
+			0,
+		},
+		{
 			"endpoints",
 			"kubernetes_endpoints",
 			0,
