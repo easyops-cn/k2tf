@@ -150,7 +150,7 @@ func ToTerraformResourceType(obj runtime.Object) string {
 func ToTerraformResourceName(obj runtime.Object) string {
 	meta := k8sutils.ObjectMeta(obj)
 
-	return NormalizeTerraformName(meta.Name, false, "")
+	return "resource_" + NormalizeTerraformName(meta.Name, false, "")
 }
 
 // NormalizeTerraformMapKey converts Map keys to a form suitable for Terraform
